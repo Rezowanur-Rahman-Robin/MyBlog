@@ -1,0 +1,34 @@
+.insertBlogScreen label {
+  float: left;
+  font-weight: bold;
+  padding: auto;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.edit__BlogScreen label {
+  float: left;
+  font-weight: bold;
+  padding: auto;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+.admin_viewBlogSelect_1 {
+  width: 90%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #9c27b0;
+  color: white;
+  background-color: #9c27b0 !important;
+  text-align: center;
+}
+
+.admin_viewBlogSelect_2 {
+  width: 90%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #e91e63;
+  color: white;
+  background-color: #e91e63 !important;
+  text-align: center;
+}
