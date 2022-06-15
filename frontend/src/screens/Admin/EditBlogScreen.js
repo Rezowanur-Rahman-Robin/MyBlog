@@ -1,10 +1,10 @@
-import React,{useState,useRef,useEffect} from 'react'
-import {useDispatch,useSelector} from 'react-redux';
 import { Editor } from '@tinymce/tinymce-react';
-import Loader from '../../components/Loader';
 import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
 import { Image } from 'react-bootstrap';
-import {  listPostsById, updatePostAction } from '../../actions/postAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { listPostsById, updatePostAction } from '../../actions/postAction';
+import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import SidebarMenu from '../../components/SidebarMenu';
 
@@ -283,7 +283,7 @@ function EditBlogScreen({match,history}) {
                              <label for="Image">
                                  Upload Banner Image
                              </label>
-                             <input type="file"  onChange={uploadFileHandler}/>                          
+                             <input type="file" name="image"  onChange={uploadFileHandler}/>                          
                     </div>
 
                     {uploading && <Loader/>}
