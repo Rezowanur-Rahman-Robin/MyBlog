@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
-import Post, { Comment } from '../models/postModel.js';
 import fs from 'fs';
+import Post from '../models/postModel.js';
 
 
 
@@ -257,7 +257,10 @@ const deletePost = asyncHandler( async(req,res)=>{
     const post = await Post.findById(req.params.id)
 
     try{
-        const filepath=post.image.split('/')[1];
+        post.image.split('/')[1]
+        const filepath=post.image.split('/')[1] + "/"+ post.image.split('/')[2];
+        //console.log(filepath);
+
     fs.unlinkSync(filepath)
     
     }catch(error){
@@ -398,4 +401,5 @@ export {
     createNewPost,
     updatePost,
     deletePost
-}
+};
+
