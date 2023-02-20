@@ -1,19 +1,19 @@
+import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import path from "path";
+import connectDB from "./config/db.js";
+import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-
-import dotenv from "dotenv";
-import connectDB from "./config/db.js";
-import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
-
+app.use(cors())
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
 
@@ -44,7 +44,7 @@ app.get('/',(req,res)=>{
 //     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
 //   );
 // }
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
 
 app.use(notFound); //middleware
 
