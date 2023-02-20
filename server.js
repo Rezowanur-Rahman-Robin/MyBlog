@@ -38,12 +38,12 @@ app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 // console.log(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
 // console.log(express.static(path.join(__dirname, '/frontend/build')))
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("frontend/build"));
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
-  );
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("frontend/build"));
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+//   );
+// }
 
 app.use(notFound); //middleware
 
