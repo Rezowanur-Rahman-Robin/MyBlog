@@ -258,7 +258,7 @@ const deletePost = asyncHandler( async(req,res)=>{
 
     try {
         if (post.image) {
-            const filepath = path.join(__dirname, '../', post.image); // Ensure correct path
+            const filepath = path.join(__dirname, '..', post.image); // Ensure correct path
 
             if (fs.existsSync(filepath) && fs.lstatSync(filepath).isFile()) {  
                 fs.unlinkSync(filepath); // Delete only if it's a file
