@@ -258,7 +258,7 @@ const deletePost = asyncHandler( async(req,res)=>{
 
     try{
        
-        const filepath=post.image.split('/')[1];
+        const filepath=post.image.split('/')?.length>1 ? post.image.split('/')[1]: post.image;
         //console.log(filepath);
 
     fs.unlinkSync(filepath)
