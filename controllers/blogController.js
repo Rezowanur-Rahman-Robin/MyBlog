@@ -258,7 +258,11 @@ const deletePost = asyncHandler( async(req,res)=>{
 
     try {
         if (post.image) {
-            const filepath = path.join(__dirname, '..', post.image); // Ensure correct path
+            let imagePath = post.image.replace(/\\/g, '/'); // Normalize Windows-style slashes
+            imagePath = imagePath.startsWith('/') || imagePath.startsWith('../') ? imagePath.substring(1) : imagePath; // Remove leading `/` or `../`
+            imagePath = path.normalize(imagePath).replace(/^(\.\.(\/|\\|$))+/g, ''); // Prevent directory traversal
+
+            const filepath = path.join(__dirname, '../', imagePath); // Construct a secure absolute path
 
             if (fs.existsSync(filepath) && fs.lstatSync(filepath).isFile()) {  
                 fs.unlinkSync(filepath); // Delete only if it's a file
