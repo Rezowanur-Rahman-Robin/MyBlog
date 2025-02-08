@@ -256,16 +256,17 @@ const deletePost = asyncHandler( async(req,res)=>{
 
     const post = await Post.findById(req.params.id)
 
-    try{
-       
-        const filepath=post.image.split('/')?.length>1 ? post.image.split('/')[1]: post.image;
-        //console.log(filepath);
-        if(filepath){
-            fs.unlinkSync(filepath)
+    try {
+        if (post.image) {
+            const filepath = path.join(__dirname, '../', post.image); // Ensure correct path
+
+            if (fs.existsSync(filepath) && fs.lstatSync(filepath).isFile()) {  
+                fs.unlinkSync(filepath); // Delete only if it's a file
+            }
         }
-    
-    }catch(error){
-        throw new Error(error)
+    } catch (error) {
+        console.error('File deletion error:', error);
+        throw new Error('Failed to delete file');
     }
 
     if(post){
