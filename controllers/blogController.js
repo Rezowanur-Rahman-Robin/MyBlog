@@ -1,9 +1,13 @@
 import asyncHandler from 'express-async-handler';
 import fs from 'fs';
 import Post from '../models/postModel.js';
+import path from 'path'
 
 
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 
@@ -256,24 +260,24 @@ const deletePost = asyncHandler( async(req,res)=>{
 
     const post = await Post.findById(req.params.id)
 
-    try {
-        if (post.image) {
-            let imagePath = post.image.replace(/\\/g, '/'); // Normalize Windows-style slashes
-            imagePath = imagePath.startsWith('/') || imagePath.startsWith('../') ? imagePath.substring(1) : imagePath; // Remove leading `/` or `../`
-            imagePath = path.normalize(imagePath).replace(/^(\.\.(\/|\\|$))+/g, ''); // Prevent directory traversal
-
-            const filepath = path.join(__dirname, '../', imagePath); // Construct a secure absolute path
-
-            if (fs.existsSync(filepath) && fs.lstatSync(filepath).isFile()) {  
-                fs.unlinkSync(filepath); // Delete only if it's a file
-            }
-        }
-    } catch (error) {
-        console.error('File deletion error:', error);
-        throw new Error('Failed to delete file');
-    }
 
     if(post){
+        try {
+           
+                let imagePath = post.image.replace(/\\/g, '/'); // Normalize Windows-style slashes
+
+                imagePath = imagePath.startsWith('/') || imagePath.startsWith('../') ? imagePath.substring(1) : imagePath; // Remove leading `/` or `../`
+                imagePath = path.normalize(imagePath).replace(/^(\.\.(\/|\\|$))+/g, ''); // Prevent directory traversal
+                const filepath = path.join(__dirname, '../', imagePath); // Construct a secure absolute path
+                if (fs.existsSync(filepath) && fs.lstatSync(filepath).isFile()) {  
+                    fs.unlinkSync(filepath); // Delete only if it's a file
+                }
+            
+        } catch (error) {
+            console.error('File deletion error:', error);
+            throw new Error('Failed to delete file');
+        }
+    
         await post.remove()
 
         res.json('Post has been Removed!')
